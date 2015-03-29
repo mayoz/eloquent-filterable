@@ -19,7 +19,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Mayoz\\Database\\": "src/"
+            "Mayoz\\Filter\\": "src/"
         }
     },
     "minimum-stability": "stable"
