@@ -1,17 +1,19 @@
 <?php
 
-use Mayoz\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
+use Mayoz\Filter\Filterable;
 
-class Post extends Model {
+class Post extends Model
+{
+	use Filterable;
 
 	/**
-	 * Query filter abstracts.
+	 * The attributes that should be filter.
 	 *
 	 * @var array
 	 */
-	protected $filter = [
+	protected $filters = [
 		'StatusActiveFilter',
 		'PublishedFilter'
 	];
-
 }

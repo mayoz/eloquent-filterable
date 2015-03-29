@@ -14,33 +14,21 @@ To get the latest version of Eloquent Filterable, simply add the following line 
 }
 ```
 
-You'll then need to run `composer install` or `composer update` to download it and have the autoloader updated.
-
-or use to shortcut installed through terminal:
+You'll then need to run `composer install` or `composer update` to download it and have the autoloader updated. Or use to shortcut installed through terminal:
 
 ```bash
 composer require mayoz/eloquent-filterable ~1.0
-```
-
-Once Eloquent Filterable is installed, you need to replace the Eloquent aliases. Open up config/app.php and find the `Eloquent` alias. Edit as following:
-
-```php
-'aliases' => [
-    ...
-    'Eloquent' => 'Mayoz\Database\Eloquent\Model',
-    ...
-];
 ```
 
 ## Usage
 
 1. Create your query filters.
 2. Create your Eloquent models.
-3. Use the query filters in the Eloquent model.
+3. Define `Filterable` trait and use the query filters in the Eloquent model.
 
 ### Create Filters
 
-All filters must be extend `Mayoz\Database\Filter\Filter` abstract class. Thus, can be used `before` and `after` methods in your filters.
+All filters should be extend `Mayoz\Filter\Filter` abstract class. Thus, can be used `before` and `after` methods in your filters.
 
 #### The Before Method
 
@@ -49,11 +37,10 @@ The `before` method responsible to position the **head** of the WHERE clause of 
 ```php
 <?php namespace App\Filters;
 
-use Mayoz\Database\Filter\Filter;
+use Mayoz\Filter\Filter;
 
 class PublishedFilter extends Filter
 {
-
 	/**
 	 * The first executable filter clause.
 	 *
@@ -64,7 +51,6 @@ class PublishedFilter extends Filter
 	{
 		$query->where('published', '=', 1);
 	}
-
 }
 ```
 
@@ -75,11 +61,10 @@ The `after` method responsible to position the **end** of the WHERE clause of th
 ```php
 <?php namespace App\Filters;
 
-use Mayoz\Database\Filter\Filter;
+use Mayoz\Filter\Filter;
 
 class StatusActiveFilter extends Filter
 {
-
 	/**
 	 * The last executable filter clause.
 	 *
@@ -90,37 +75,38 @@ class StatusActiveFilter extends Filter
 	{
 		$query->where('status', '=', 'active');
 	}
-
 }
 ```
 
 ### Create Model
 
-Your models must be extended `Mayoz\Database\Eloquent\Model` abstract class. Assign the filters to `$filter` variable. Consider the following example:
+Create your model file. If you want to manage queries add the `Filterable` trait your model file. And than, assign the all associative filters to `$filters` variable. Consider the following example:
 
 ```php
 <?php namespace App;
 
-use Mayoz\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
+use Mayoz\Filter\Filterable;
 
-class Post extends Model {
+class Post extends Model
+{
+    use Filterable;
 
 	/**
-	 * Default query filters.
+	 * The attributes that should be filter.
 	 *
 	 * @var array
 	 */
-	protected $filter = [
+	protected $filters = [
 		'App\Filters\StatusActiveFilter',
 		'App\Filters\PublishedFilter'
 	];
 
 	// other things...
-
 }
 ```
 
->> **Important:** The order of the filter is important when adding (if need multiple before or after filters) query clause. The before filters are added the head of the clause according to the reference sequence. Likewise, the after filters.
+> **Important:** The order of the filter is important when adding (if need multiple before or after filters) query clause. The before filters are added the head of the clause according to the reference sequence. Likewise, the after filters.
 
 ### Debug
 

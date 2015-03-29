@@ -9,22 +9,37 @@
  * file that was distributed with this source code.
  */
 
-namespace Mayoz\Database\Query;
+namespace Mayoz\Filter;
 
-use Illuminate\Database\Query\Builder as QueryBuilder;
-use Mayoz\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 /**
- * This is the query builder class.
+ * Query builder.
  *
  * @author Sercan Çakır <srcnckr@gmail.com>
  */
-class Builder extends QueryBuilder {
+class QueryBuilder extends Builder
+{
+    /**
+     * The model being queried.
+     *
+     * @var \Illuminate\Database\Eloquent\Model
+     */
+    protected $model;
 
     /**
-     * The model implemention.
+     * Set a model instance for the model being queried.
+     *
+     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @return static
      */
-    public $model;
+    public function setModel(Model $model)
+    {
+        $this->model = $model;
+
+        return $this;
+    }
 
     /**
      * Execute the query as a "select" statement.
@@ -36,10 +51,9 @@ class Builder extends QueryBuilder {
     {
         if ($this->model instanceof Model)
         {
-            $this->model->applyFilter($this, 'after');
+            $this->model->filterQuery($this, 'after');
         }
 
         return parent::get($columns);
     }
-
 }

@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Mayoz\Database\Filter;
+namespace Mayoz\Filter;
 
 /**
- * This is the query filter class.
+ * Filter.
  *
  * @author Sercan Çakır <srcnckr@gmail.com>
  */

@@ -1,6 +1,6 @@
 <?php
 
-use Mayoz\Database\Filter\Filter;
+use Mayoz\Filter\Filter;
 
 class PublishedFilter extends Filter
 {
