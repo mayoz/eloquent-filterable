@@ -1,0 +1,26 @@
+{
+    "name": "mayoz/eloquent-filterable",
+    "description": "Query filter for your Eloquent models.",
+    "keywords": ["laravel", "eloquent", "filter"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sercan Çakır",
+            "email": "srcnckr@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "illuminate/database": "5.0.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.0.*",
+        "orchestra/testbench": "3.0.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Mayoz\\Database\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
