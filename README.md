@@ -44,33 +44,7 @@ All filters must be extend `Mayoz\Database\Filter\Filter` abstract class. Thus, 
 
 #### The Before Method
 
-The `before` method responsible to position the **head** of the WHERE clause of the query. For example; we need `status = 'active'` of query WHERE clause. However, this clause would like to work on before the other clauses.
-
-```php
-<?php namespace App\Filters;
-
-use Mayoz\Database\Filter\Filter;
-
-class StatusActiveFilter extends Filter
-{
-
-	/**
-	 * The first executable filter clause.
-	 *
-	 * @param  mixed  $query
-	 * @return void
-	 */
-	public static function after($query)
-	{
-		$query->where('status', '=', 'active');
-	}
-
-}
-```
-
-#### The After Method
-
-The `after` method responsible to position the **end** of the WHERE clause of the query. For example, if need `published = 1` of query WHERE clause. However, this clause would like to work on after the other clauses.
+The `before` method responsible to position the **head** of the WHERE clause of the query. For example; we need `published = 1` of query WHERE clause. However, this clause would like to work on before the other clauses.
 
 ```php
 <?php namespace App\Filters;
@@ -81,7 +55,7 @@ class PublishedFilter extends Filter
 {
 
 	/**
-	 * The last executable filter clause.
+	 * The first executable filter clause.
 	 *
 	 * @param  mixed  $query
 	 * @return void
@@ -89,6 +63,32 @@ class PublishedFilter extends Filter
 	public static function before($query)
 	{
 		$query->where('published', '=', 1);
+	}
+
+}
+```
+
+#### The After Method
+
+The `after` method responsible to position the **end** of the WHERE clause of the query. For example, if need `status = 'active'` of query WHERE clause. However, this clause would like to work on after the other clauses.
+
+```php
+<?php namespace App\Filters;
+
+use Mayoz\Database\Filter\Filter;
+
+class StatusActiveFilter extends Filter
+{
+
+	/**
+	 * The last executable filter clause.
+	 *
+	 * @param  mixed  $query
+	 * @return void
+	 */
+	public static function after($query)
+	{
+		$query->where('status', '=', 'active');
 	}
 
 }
