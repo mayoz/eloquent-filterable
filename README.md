@@ -126,6 +126,37 @@ WHERE  `published` = 1     # added by automatic filter.
   AND  `status` = 'active' # added by automatic filter.
 ```
 
+## Why Use?
+
+For example, you might want to show only the approved text of the visitors on the site. However, administrators can see them all. Create a new extended filter:
+
+```php
+<?php namespace App\Filters;
+
+use Auth;
+use Mayoz\Filter\Filter;
+
+class StatusActiveFilter extends Filter
+{
+	/**
+	 * The last executable filter clause.
+	 *
+	 * @param  mixed  $query
+	 * @return void
+	 */
+	public static function after($query)
+	{
+		# assume, the `users` table has `role` field.
+		if (array_get(Auth::user(), 'role') != 'administrator')
+		{
+			$query->where('status', '=', 'active');
+		}
+	}
+}
+```
+
+Hocus, pocus! Visitors will display only the active posts. But administrator display all. Ok?
+
 # Contributing
 
 Love innovation and simplicity. Please use issues all errors or suggestions reporting. Follow the steps for contributing:
