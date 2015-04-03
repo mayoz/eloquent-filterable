@@ -12,11 +12,11 @@
 namespace Mayoz\Filter;
 
 /**
- * Filter.
+ * Filter interface.
  *
  * @author Sercan Çakır <srcnckr@gmail.com>
  */
-abstract class Filter implements FilterInterface
+interface FilterInterface
 {
     /**
      * The first executable filter clause.
@@ -24,10 +24,7 @@ abstract class Filter implements FilterInterface
      * @param  mixed  $query
      * @return void
      */
-    public function before($query)
-    {
-        // nothing
-    }
+    public function before($query);
 
     /**
      * The last executable filter clause.
@@ -35,8 +32,5 @@ abstract class Filter implements FilterInterface
      * @param  mixed  $query
      * @return void
      */
-    public function after($query)
-    {
-        // nothing
-    }
+    public function after($query);
 }

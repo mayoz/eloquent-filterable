@@ -11,6 +11,8 @@
 
 namespace Mayoz\Filter;
 
+use Exception;
+
 /**
  * Filter trait.
  *
@@ -56,18 +58,32 @@ trait Filterable
      * @param  mixed   $query
      * @param  string  $schedule
      * @return void
+     * @throws \Exception
      */
     public function filterQuery($query, $schedule = 'before')
     {
         if (property_exists($this, 'filters'))
         {
-            foreach($this->filters as $filter)
+            array_map(function($filter) use ($query, $schedule)
             {
-                if (is_callable([$filter, $schedule]))
+                $instance = new $filter;
+
+                // All filters must be implements the FilterableInterface.
+                // Trust me, this is necessary for the future version capabilities.
+                if ( ! $instance instanceof FilterInterface)
                 {
-                    call_user_func([new $filter, $schedule], $query);
+                    throw new Exception("The filter must be implement `Mayoz\Filter\FilterInterface`!");
                 }
-            }
+
+                // The filter should have of before or after (or both) methods.
+                // Let's check, do meet the requested method of control?
+                if ( ! method_exists($instance, $schedule))
+                {
+                    throw new Exception("The `{$schedule}` method not found in `{$filter}`!");
+                }
+
+                call_user_func([$instance, $schedule], $query);
+            }, $this->filters);
         }
     }
 }
