@@ -47,7 +47,7 @@ class PublishedFilter extends Filter
 	 * @param  mixed  $query
 	 * @return void
 	 */
-	public static function before($query)
+	public function before($query)
 	{
 		$query->where('published', '=', 1);
 	}
@@ -71,7 +71,7 @@ class StatusActiveFilter extends Filter
 	 * @param  mixed  $query
 	 * @return void
 	 */
-	public static function after($query)
+	public function after($query)
 	{
 		$query->where('status', '=', 'active');
 	}
@@ -144,7 +144,7 @@ class StatusActiveFilter extends Filter
 	 * @param  mixed  $query
 	 * @return void
 	 */
-	public static function after($query)
+	public function after($query)
 	{
 		# assume, the `users` table has `role` field.
 		if (array_get(Auth::user(), 'role') != 'administrator')

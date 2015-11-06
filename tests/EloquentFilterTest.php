@@ -101,7 +101,7 @@ class EloquentFilterTest extends TestCase {
 		$debug  = last(DB::getQueryLog());
 
 		$this->assertTrue($exists);
-		$this->assertEquals('select count(*) as aggregate from "posts" where "published" = ? and "views" >= ? and "status" = ? limit 1', $debug['query']);
+		$this->assertEquals('select exists(select * from "posts" where "published" = ? and "views" >= ?) as "exists"', $debug['query']);
 	}
 
 	public function testLists()
@@ -109,7 +109,7 @@ class EloquentFilterTest extends TestCase {
 		$lists = Post::where('views', '>=', 10)->lists('id', 'title');
 		$debug = last(DB::getQueryLog());
 
-		$this->assertEquals(['Bar' => 2, 'FooBar' => 3], $lists);
+		$this->assertEquals(['Bar' => 2, 'FooBar' => 3], $lists->toArray());
 		$this->assertEquals('select "id", "title" from "posts" where "published" = ? and "views" >= ? and "status" = ?', $debug['query']);
 	}
 
