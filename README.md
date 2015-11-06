@@ -4,20 +4,20 @@ With this package, you can optimize query clauses calling before or after the fi
 
 ## Installation
 
-[PHP](https://php.net/) 5.4+ or [HHVM](http://hhvm.com/) 3.3+, and [Composer](https://getcomposer.org/) are required.
+[PHP](https://php.net/) 5.5.9+ or [HHVM](http://hhvm.com/), and [Composer](https://getcomposer.org/) are required.
 
 To get the latest version of Eloquent Filterable, simply add the following line to the require block of your `composer.json` file:
 
 ```php
 "require": {
-    "mayoz/eloquent-filterable": "~1.0"
+    "mayoz/eloquent-filterable": "~2.0"
 }
 ```
 
 You'll then need to run `composer install` or `composer update` to download it and have the autoloader updated. Or use to shortcut installed through terminal:
 
 ```bash
-composer require mayoz/eloquent-filterable ~1.0
+composer require mayoz/eloquent-filterable ~2.0
 ```
 
 ## Usage
@@ -110,7 +110,7 @@ class Post extends Model
 
 ### Debug
 
-Now the `Post` model is ready to use. You ready? Okay, we're testing the query. Don't forget to enable the [query logging](http://laravel.com/docs/5.0/database#query-logging) for examine the model queries.
+Now the `Post` model is ready to use. You ready? Okay, we're testing the query. Don't forget to enable the [query logging](http://laravel.com/docs/5.1/database#listening-for-query-events) for examine the model queries.
 
 ```php
 $model = \App\Post::where('views', '>', 100)->get();
